@@ -1,22 +1,26 @@
 const router = require('express').Router({ mergeParams: true })
 const cors = require('cors')
 const controller = require('./movies.controller')
+const methodNotAllowed = require('../errors/methodNotAllowed')
 const reviewsRouter = require('../reviews/reviews.router')
 const theatersRouter = require('../theaters/theaters.router')
 
+const corsGet = cors({ methods: 'GET' })
 
-router
-    .route('/:movieId/theaters')
+router.use('/:movieId/theaters', theatersRouter)
 
-router
-    .route('/:movieId/reviews')
+router.use('/:movieId/reviews', reviewsRouter)
 
 router
     .route('/:movieId')
-    .get()
-    .all()
+    .get(corsGet, controller.read)
+    .options(corsGet)
+    .all(methodNotAllowed)
 
 router
     .route('/')
-    .get()
-    .all()
+    .get(corsGet, controller.list)
+    .options(corsGet)
+    .all(methodNotAllowed)
+
+module.exports = router
