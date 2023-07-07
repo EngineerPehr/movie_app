@@ -8,6 +8,7 @@ const notFound = require('./errors/notFound')
 const errorHandler = require('./errors/errorHandler')
 const app = express()
 
+app.use(morgan('dev'))
 app.use('/movies', moviesRouter)
 app.use('/reviews', reviewsRouter)
 app.use('/theaters', theatersRouter)
