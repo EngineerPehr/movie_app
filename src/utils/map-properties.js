@@ -1,4 +1,4 @@
-const lodash = require("lodash");
+const lodash = require('lodash')
 
 /**
  * Creates af function to map the properties of an object to different properties on a new object.
@@ -11,11 +11,11 @@ function mapProperties(configuration) {
   return (data) => {
     if (data) {
       return Object.entries(data).reduce((accumulator, [key, value]) => {
-        return lodash.set(accumulator, configuration[key] || key, value);
-      }, {});
+        return lodash.set(accumulator, configuration[key] || key, value)
+      }, {})
     }
-    return data;
-  };
+    return data
+  }
 }
 
-module.exports = mapProperties;
+module.exports = mapProperties

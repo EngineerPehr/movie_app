@@ -1,5 +1,5 @@
-const lodash = require("lodash");
-const mapProperties = require("./map-properties");
+const lodash = require('lodash')
+const mapProperties = require('./map-properties')
 
 /**
  * Generates a custom map-properties configuration for the current row in the data set.
@@ -26,9 +26,9 @@ function getRowMapConfiguration(configuration, previousRow) {
       value === null
         ? lodash.get(previousRow, `${source[index - 1]}.length`, 0)
         : value
-    );
-    return accumulator;
-  }, {});
+    )
+    return accumulator
+  }, {})
 }
 
 /**
@@ -45,21 +45,21 @@ function getRowMapConfiguration(configuration, previousRow) {
 function reduceProperties(uniqueField, configuration) {
   return (data) => {
     const reducedData = data.reduce((accumulator, row) => {
-      const key = row[uniqueField];
-      const rowObject = accumulator[key] || {};
+      const key = row[uniqueField]
+      const rowObject = accumulator[key] || {}
 
       const rowMapConfiguration = getRowMapConfiguration(
         configuration,
         rowObject
-      );
+      )
 
-      const rowMapper = mapProperties(rowMapConfiguration);
-      accumulator[key] = lodash.merge(rowObject, rowMapper(row));
-      return accumulator;
-    }, {});
+      const rowMapper = mapProperties(rowMapConfiguration)
+      accumulator[key] = lodash.merge(rowObject, rowMapper(row))
+      return accumulator
+    }, {})
 
-    return Object.values(reducedData);
-  };
+    return Object.values(reducedData)
+  }
 }
 
-module.exports = reduceProperties;
+module.exports = reduceProperties
