@@ -3,7 +3,7 @@ const asyncErrorHandler = require('../errors/asyncErrorHandler')
 
 const movieExists = async (req, res, next) => {
     const { movieId } = req.params
-    const movie = await read(movieId)
+    const movie = await service.read(movieId)
     movie ? (
         res.locals.movie = movie,
         next()
@@ -31,7 +31,7 @@ module.exports = {
     list: [asyncErrorHandler(list)],
     read: [
         asyncErrorHandler(movieExists),
-        asyncErrorHandler(read)
+        read
     ]
 
 }

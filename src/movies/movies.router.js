@@ -8,9 +8,7 @@ const theatersRouter = require('../theaters/theaters.router')
 const corsGet = cors({ methods: 'GET' })
 
 router.use('/:movieId/theaters', theatersRouter)
-
 router.use('/:movieId/reviews', reviewsRouter)
-
 router
     .route('/:movieId')
     .get(corsGet, controller.read)

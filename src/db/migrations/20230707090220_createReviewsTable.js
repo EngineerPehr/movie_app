@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
     return knex.schema.createTable('reviews', (table) => {
-        table.increment('review_id').primary()
+        table.increments('review_id').primary()
         table.text('content')
         table.integer('score')
         table.integer('critic_id')
