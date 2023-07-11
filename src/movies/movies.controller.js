@@ -31,7 +31,6 @@ module.exports = {
     list: [asyncErrorHandler(list)],
     read: [
         asyncErrorHandler(movieExists),
-        read
+        read,
     ]
-
 }
