@@ -5,7 +5,7 @@ const reviewsRouter = require('../reviews/reviews.router')
 const theatersRouter = require('../theaters/theaters.router')
 
 router.use('/:movieId/theaters', theatersRouter)
-router.use('/:movieId/reviews', reviewsRouter)
+router.use('/:movieId/reviews', controller.movieExists, reviewsRouter)
 router
     .route('/:movieId')
     .get(controller.read)

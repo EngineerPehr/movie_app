@@ -1,13 +1,24 @@
 const knex = require('../db/connection')
 
-function list() {
-    return knex('movies').select('*')
+function list (query) {
+    if (query == 'true') {
+        return knex('movies as m')
+            .join('movies_theaters as mt', 'm.movie_id', 'mt.movie_id')
+            .select('*')
+            .where({ is_showing: 1 })
+            .groupBy('m.movie_id')
+    } else {
+        return knex('movies as m')
+            .join('movies_theaters as mt', 'm.movie_id', 'mt.movie_id')
+            .select('*')
+            .groupBy('m.movie_id')
+    }
 }
 
-function read(movieId) {
+function read (movieId) {
     return knex('movies')
         .select('*')
-        .where({ movie_id: movieId})
+        .where({ movie_id: movieId })
 }
 
 module.exports = {

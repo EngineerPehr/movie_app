@@ -2,7 +2,7 @@ const service = require('./movies.service')
 const asyncErrorHandler = require('../errors/asyncErrorHandler')
 
 const movieExists = async (req, res, next) => {
-    const { movieId } = req.params
+    const movieId = Number(req.params.movieId)
     const movie = await service.read(movieId)
     if (movie) {
         res.locals.movie = movie
@@ -16,15 +16,14 @@ const movieExists = async (req, res, next) => {
 }
 
 async function list (req, res, _next) {
-    const query = req.query.is_showing
-    const response = await service.list()
-    const data = response.filter((query === 'true') ? ((item) => item.is_showing === true) : (() => true))
-    res.json({ data })
+    const is_showing = req.query.is_showing
+    const response = await service.list(is_showing)
+    res.json({ data: response })
 }
 
 function read (_req, res, _next) {
-    const { movie: data } = res.locals
-    res.json({ data })
+    const { movie } = res.locals
+    res.json({ data: movie[0] })
 }
 
 module.exports = {
@@ -32,5 +31,6 @@ module.exports = {
     read: [
         asyncErrorHandler(movieExists),
         read,
-    ]
+    ],
+    movieExists
 }
