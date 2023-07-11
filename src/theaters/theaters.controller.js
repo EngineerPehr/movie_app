@@ -21,5 +21,5 @@ async function list (_req, res, _next) {
 }
 
 module.exports = {
-    list: [asyncErrorHandler(list)],
+    list: [asyncErrorHandler(list)]
 }

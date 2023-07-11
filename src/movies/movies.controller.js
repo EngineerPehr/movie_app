@@ -4,15 +4,15 @@ const asyncErrorHandler = require('../errors/asyncErrorHandler')
 const movieExists = async (req, res, next) => {
     const { movieId } = req.params
     const movie = await service.read(movieId)
-    movie ? (
-        res.locals.movie = movie,
+    if (movie) {
+        res.locals.movie = movie
         next()
-    ) : (
+    } else {
         next({
             status: 404,
             message: `Movie ${movieId} not found`
         })
-    )
+    }
 }
 
 async function list (req, res, _next) {
