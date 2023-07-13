@@ -1,4 +1,4 @@
-
+// Creates movies table
 exports.up = function(knex) {
     return knex.schema.createTable('movies', (table => {
         table.increments('movie_id').primary()
@@ -11,6 +11,7 @@ exports.up = function(knex) {
     }))
 }
 
+// Removes movies table
 exports.down = function(knex) {
     return knex.schema.dropTable('movies')
 }
