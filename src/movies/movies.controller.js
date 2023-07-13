@@ -10,7 +10,7 @@ const movieExists = async (req, res, next) => {
     } else {
         next({
             status: 404,
-            message: `Movie ${movieId} not found`
+            message: `Cannot be found ${req.originalUrl}`
         })
     }
 }
@@ -23,7 +23,7 @@ async function list (req, res, _next) {
 
 function read (_req, res, _next) {
     const { movie } = res.locals
-    res.json({ data: movie[0] })
+    res.json({ data: movie })
 }
 
 module.exports = {
