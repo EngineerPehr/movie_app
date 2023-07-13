@@ -5,7 +5,7 @@ function asyncErrorHandler(delegate, defaultStatus) {
         try {
             await delegate (req, res, next)
         }
-        // Catches error and passes them to errorHandler
+        // Catches error and passes it to errorHandler
         catch (error) {
             const { status = defaultStatus, message = error } = error
             next({ status, message })

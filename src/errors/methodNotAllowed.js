@@ -1,3 +1,4 @@
+// Error handler for forbidden methods
 const methodNotAllowed = (req, res, next) => {
     next({
       status: 405,
