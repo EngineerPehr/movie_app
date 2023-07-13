@@ -11,6 +11,7 @@ function read (reviewId) {
     return knex('reviews')
         .select('*')
         .where({ review_id: reviewId})
+        .first()
 }
 
 function update (updatedReview) {

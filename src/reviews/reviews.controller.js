@@ -23,13 +23,13 @@ const formattedReviews = reduceProperties('review_id', {
 const reviewExists = async (req, res, next) => {
     const reviewId = Number(req.params.reviewId)
     const review = await service.read(reviewId)
-    if (review[0]) {
-        res.locals.review = review[0]
+    if (review) {
+        res.locals.review = review
         next()
     } else {
         next({
             status: 404,
-            message: `Review ${reviewId} not found`
+            message: `Cannot be found: ${req.originalUrl}`
         })
     }
 }
@@ -42,16 +42,15 @@ async function list (req, res, _next) {
 }
 
 async function update (req, res, _next) {
-    const { data } = req.body
     const { review } = res.locals
     const updatedReview = {
         ...review,
-        ...data,
-        review_id: res.locals.review.review_id,
+        ...req.body.data,
+        review_id: review.review_id,
     }
     const response = await service.update(updatedReview)
-    const finalData = formattedReviews(response)
-    res.json({ finalData })
+    const data = formattedReviews(response)
+    res.json({ data })
 }
 
 async function destroy (_req, res, _next) {
