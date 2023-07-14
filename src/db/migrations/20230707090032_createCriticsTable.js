@@ -1,4 +1,4 @@
-
+// Creates critics table
 exports.up = function (knex) {
   return knex.schema.createTable('critics', (table) => {
     table.increments('critic_id').primary()
@@ -9,6 +9,7 @@ exports.up = function (knex) {
   })
 }
 
+// Removes critics table
 exports.down = function(knex) {
     return knex.schema.dropTable('critics')
 }

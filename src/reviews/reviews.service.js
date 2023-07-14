@@ -1,6 +1,8 @@
+// Imports
 const knex = require('../db/connection')
 const mapProperties = require('../utils/map-properties')
 
+// Adds a nested critic property via mapProperties
 const addCritic = mapProperties({
     'critic_id': 'critic.critic_id', 
     'preferred_name': 'critic.preferred_name', 
@@ -11,17 +13,20 @@ const addCritic = mapProperties({
     }
 )
 
+// Helper function that retrieves a specific critic
 const readCritic = async (critic_id) => {
     return knex('critics')
     .where({ critic_id })
     .first()
 }
 
+// Helper function that updates a given review with a critic object
 const setCritic = async (review) => {
     review.critic = await readCritic(review.critic_id)
     return review
 }
 
+// Returns all reviews with critic object embedded in each review
 function list () {
     return knex('reviews as r')
         .join('movies as m', 'm.movie_id', 'r.movie_id')
@@ -30,27 +35,31 @@ function list () {
         .then((data) => data.map(addCritic))
 }
 
+// Returns the specified review
 function read (reviewId) {
     return knex('reviews as r')
         .select('*')
         .where({ review_id: reviewId})
         .first()
-    }
-    
-    function update (updatedReview) {
-        return knex('reviews as r')
-        .where({ review_id: updatedReview.review_id })
-        .update(updatedReview, '*')
-        .then(() => read(updatedReview.review_id))
-        .then(setCritic)
-    }
+}
 
+// Updates a given review with the given data
+function update (updatedReview) {
+    return knex('reviews as r')
+    .where({ review_id: updatedReview.review_id })
+    .update(updatedReview, '*')
+    .then(() => read(updatedReview.review_id))
+    .then(setCritic)
+}
+
+// Deletes given review
 function destroy (reviewId) {
     return knex('reviews')
         .where({ review_id: reviewId })
         .del()
 }
 
+// Exports
 module.exports = {
     list, 
     read, 

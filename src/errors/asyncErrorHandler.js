@@ -1,11 +1,15 @@
+// Error handler for async functions
 function asyncErrorHandler(delegate, defaultStatus) {
-    return (req, res, next) => {
-        Promise.resolve()
-        .then(() => delegate(req, res, next))
-        .catch((error = {}) => {
+    return async (req, res, next) => {
+        // Trys to run given function
+        try {
+            await delegate (req, res, next)
+        }
+        // Catches error and passes it to errorHandler
+        catch (error) {
             const { status = defaultStatus, message = error } = error
             next({ status, message })
-        })
+        }
     }
 }
   

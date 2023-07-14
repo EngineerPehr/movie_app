@@ -1,4 +1,4 @@
-
+// Creates review table
 exports.up = function(knex) {
     return knex.schema.createTable('reviews', (table) => {
         table.increments('review_id').primary()
@@ -20,6 +20,7 @@ exports.up = function(knex) {
     })
 }
 
+// Removes reviews table
 exports.down = function(knex) {
     return knex.schema.dropTable('reviews')
 }

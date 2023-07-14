@@ -1,9 +1,13 @@
+// Imports
 const service = require('./theaters.service')
 const reduceProperties = require('../utils/reduce-properties')
 const asyncErrorHandler = require('../errors/asyncErrorHandler')
 
+// Gets all theaters and formats it with movies
 async function list (_req, res, _next) {
+    // Calls service to get theaters
     const response = await service.list()
+    // Format via reduceProperties
     const formattedTheaters = reduceProperties('theater_id', {
         'movie_id': ['movies', null, 'movie_id'],
         'title': ['movies', null, 'title'],
@@ -16,10 +20,12 @@ async function list (_req, res, _next) {
         'is_showing': ['movies_theaters', null, 'is_showing'],
         'theater_id': ['theaters', null, 'theater_id']
     })
+    // Format applied to theaters
     const data = formattedTheaters(response)
     res.json({ data })
 }
 
+// Exports
 module.exports = {
     list: [asyncErrorHandler(list)]
 }

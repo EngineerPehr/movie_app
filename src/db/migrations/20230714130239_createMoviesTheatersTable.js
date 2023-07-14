@@ -1,4 +1,4 @@
-
+// Creates movies_theaters table
 exports.up = function(knex) {
     return knex.schema.createTable('movies_theaters', (table) => {
         table.integer('movie_id').unsigned().notNullable()
@@ -18,6 +18,7 @@ exports.up = function(knex) {
     })
 }
 
+// Removes movies_theaters table
 exports.down = function(knex) {
     return knex.schema.dropTable('movies_theaters')
 }
